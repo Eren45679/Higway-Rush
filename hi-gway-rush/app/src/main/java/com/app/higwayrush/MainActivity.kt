@@ -50,10 +50,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(web)
 
         web.addJavascriptInterface(AdsBridge(), "AndroidAds")
-        web.evaluateJavascript(
-    "console.log('ANDROID ADS KÖPRÜSÜ TEST');",
-    null
-)
+      
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -93,6 +90,14 @@ class MainActivity : AppCompatActivity() {
             ): WebResourceResponse? {
                 return loader.shouldInterceptRequest(request.url)
             }
+            override fun onPageFinished(view: WebView, url: String) {
+    super.onPageFinished(view, url)
+
+    view.evaluateJavascript(
+        "console.log('AndroidAds bağlantısı:', typeof window.AndroidAds);",
+        null
+    )
+}
 
             override fun shouldOverrideUrlLoading(
                 view: WebView,
