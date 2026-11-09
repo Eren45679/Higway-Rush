@@ -167,13 +167,20 @@ class MainActivity : AppCompatActivity() {
     private fun showRewardedAdNow() {
         val ad = RewardedAdPreloader.pollAd(testRewardedAdUnitId)
 
-        if (ad == null) {
-            web.evaluateJavascript(
-                "window.onHighwayRewardedAdUnavailable && window.onHighwayRewardedAdUnavailable();",
-                null
-            )
-            return
-        }
+      if (ad == null) {
+    RewardedAdPreloader.start(
+        testRewardedAdUnitId,
+        PreloadConfiguration(
+            AdRequest.Builder(testRewardedAdUnitId).build()
+        )
+    )
+
+    web.evaluateJavascript(
+        "window.onHighwayRewardedAdUnavailable && window.onHighwayRewardedAdUnavailable();",
+        null
+    )
+    return
+}
 
         ad.show(this) { rewardItem ->
             runOnUiThread {
