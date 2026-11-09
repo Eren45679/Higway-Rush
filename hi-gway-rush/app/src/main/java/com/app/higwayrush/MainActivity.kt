@@ -191,14 +191,22 @@ class MainActivity : AppCompatActivity() {
     return
 }
 
-        ad.show(this) { rewardItem ->
-            runOnUiThread {
-                web.evaluateJavascript(
-                    "window.onHighwayRewardedAdCompleted && window.onHighwayRewardedAdCompleted(${rewardItem.amount});",
-                    null
-                )
-            }
-        }
+      ad.show(this) { rewardItem ->
+    runOnUiThread {
+        web.evaluateJavascript(
+            """
+            (function() {
+                if (typeof window.onHighwayRewardedAdCompleted === 'function') {
+                    window.onHighwayRewardedAdCompleted(${rewardItem.amount});
+                } else {
+                    console.log('Ödül fonksiyonu bulunamadı!');
+                }
+            })();
+            """.trimIndent(),
+            null
+        )
+    }
+}
 
         RewardedAdPreloader.start(
             testRewardedAdUnitId,
