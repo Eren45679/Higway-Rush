@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.app.higwayrush"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.app.higwayrush"
