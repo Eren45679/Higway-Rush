@@ -50,6 +50,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(web)
 
         web.addJavascriptInterface(AdsBridge(), "AndroidAds")
+        web.evaluateJavascript(
+    "console.log('ANDROID ADS KÖPRÜSÜ TEST');",
+    null
+)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
